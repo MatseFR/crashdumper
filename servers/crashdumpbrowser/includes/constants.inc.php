@@ -20,6 +20,11 @@ define("ERROR_STACK", "stack");
 define("ERROR_TIMESTAMP", "crashed");
 define("ERROR_VERSION", "version");
 
+define('DB_HOST', '');
+define('DB_USER', '');
+define('DB_PWD', '');
+define('DB_DATABASE', '');
+
 
 /**** Don't change anything below unless you know what you're doing ****/
 
