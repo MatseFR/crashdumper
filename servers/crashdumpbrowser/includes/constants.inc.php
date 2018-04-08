@@ -2,7 +2,7 @@
 /*! constants.inc.php | Crashdump Browser | Adam Perry | opensource.org/licenses/MIT */
 
 // Directory where reports are stored - you MUST set this before you start processing reports
-define("REPORT_DIR", "/var/www/crashdumpbrowser/reports");
+define("REPORT_DIR", dirname(__FILE__) . '/../reports');
 
 // Configuration options
 define("DATE_FORMAT", "H:i:s d M, Y"); // See http://us3.php.net/manual/en/function.date.php
