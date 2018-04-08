@@ -2,12 +2,13 @@
 /*! db.inc.php | Crashdump Browser | Adam Perry | opensource.org/licenses/MIT */
 // Database connection and queries; also instantiates the static DB object
 include_once("constants.inc.php");
+include_once("compat.inc.php");
 
 class db {
    private static $mysqli;
    static function connect() {
       if (!self::$mysqli) {
-         self::$mysqli = new mysqli('HOSTNAME', 'USERNAME', 'PASSWORD', 'DATABASE');
+         self::$mysqli = new mysqli(DB_HOST, DB_USER, DB_PWD, DB_NAME);
          if (mysqli_connect_errno()) {
             throw new Exception(mysqli_connect_error());
          }
@@ -161,7 +162,7 @@ class db {
       $params[] = &$perPage;
       $params[0] = &$types;
       if ($stmt = self::$mysqli->prepare($sql)) {
-         call_user_func_array(array($stmt, "bind_param"), &$params);
+         call_user_func_array(array($stmt, "bind_param"), refValues($params));
          return self::query($stmt);
       } else {
          throw new Exception(self::$mysqli->error);
@@ -341,7 +342,7 @@ class db {
       $types .= "ii";
       $params[0] = &$types;
       if ($stmt = self::$mysqli->prepare($sql)) {
-         call_user_func_array(array($stmt, "bind_param"), &$params);
+         call_user_func_array(array($stmt, "bind_param"), refValues($params));
          return self::query($stmt);
       } else {
          throw new Exception(self::$mysqli->error);
