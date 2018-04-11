@@ -123,9 +123,10 @@ class db {
    // Prepared database procedures, alphabetically by direct object
    static function addError($error, $projectId) {
       self::connect();
-      $sql = "INSERT INTO `". DB_TABLE_ERRORTYPES ."` (`". DB_COL_PROJECTID ."`, `". DB_COL_ERRORNAME ."`) VALUES (?, ?)";
+      $sql = "INSERT INTO `". DB_TABLE_ERRORTYPES ."` (`". DB_COL_PROJECTID ."`, `". DB_COL_ERRORNAME ."`, `". DB_COL_STATUS ."`, `". DB_COL_DUPLICATEID ."`) VALUES (?, ?, ?, 0)";
       if ($stmt = self::$mysqli->prepare($sql)) {
-         $stmt->bind_param("is", $projectId, $error);
+         $defaultStatus = STATUS_NEW;
+         $stmt->bind_param("isi", $projectId, $error, $defaultStatus);
          $id = self::query($stmt);
          $sql = "UPDATE `". DB_TABLE_ERRORTYPES ."` SET `". DB_COL_DUPLICATEID ."` = ? WHERE `". DB_COL_ERRORID ."` = ?";
          if ($stmt = self::$mysqli->prepare($sql)) {
