@@ -94,6 +94,7 @@ if (is_array($reports)) {
    }
 }
 
+header('content-type: application/json');
 echo json_encode($output);
 
 // INET_NTOA doesn't preserve the number of digits, so try to turn the number into something resembling a user-defined version number
