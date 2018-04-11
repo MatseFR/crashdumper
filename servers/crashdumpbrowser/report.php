@@ -29,7 +29,9 @@ if (defined("METADATA") && METADATA) {
 
 while($zipfile = zip_read($zip)) {
    $filename = zip_entry_name($zipfile);
-   $filename = end(explode("/", $filename)); // zip_entry_name returns the full path, so get just the filename
+   $filenamePart = explode("/", $filename);
+   $filename = array_pop($filenamePart); // zip_entry_name returns the full path, so get just the filename
+   
    if (($filename == "_error" || $filename == "_error.txt") && zip_entry_open($zip, $zipfile)) {
       $exception = "";
       $file = "";
